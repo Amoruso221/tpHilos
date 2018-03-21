@@ -20,7 +20,7 @@ public class BeerProducter implements Runnable{
     public void run() {
         while(Boolean.TRUE)
         {
-            int poner = aleatorio.nextInt(10);
+            int poner = aleatorio.nextInt(100); //produccion aleatoria menor a 100
             beerHouse.put(poner);
             System.out.println("El productor " + idproductor + " pone: " + poner);
             try {

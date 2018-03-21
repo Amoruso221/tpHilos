@@ -1,34 +1,32 @@
 package com.company;
 
 public class BeerHouse {
-    private int cont;
-    private boolean stock = Boolean.FALSE;
+    private int litros;
 
-    public synchronized int get()
+    public synchronized int get(int value)
     {
 
-        while (!stock) {
+        while (litros<=0 || (litros-value)<=0) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 System.err.println("BeerHouse: Error en get -> " + e.getMessage());
             }
         }
-        stock = Boolean.FALSE;
-        notify();
-        return cont;
+        litros = litros - value;
+        notifyAll();
+        return litros;
     }
 
     public synchronized void put(int value) {
-        while (stock) {
+        while (litros>=100) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 System.err.println("BeerHouse: Error en put -> " + e.getMessage());
             }
         }
-        cont = value;
-        stock = Boolean.TRUE;
-        notify();
+        litros = litros + value;
+        notifyAll();
     }
 }
